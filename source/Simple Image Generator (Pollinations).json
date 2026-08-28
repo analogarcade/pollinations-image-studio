@@ -1,0 +1,94 @@
+{
+  "name": "Simple Image Generator (Pollinations)",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "=https://image.pollinations.ai/{{ $json.chatInput }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "id": "c0d04900-b247-4895-8b93-cbae249a55b1",
+      "name": "Generate Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        224,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "options": {
+          "responseMode": "responseNodes"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        32,
+        0
+      ],
+      "id": "ff495f0f-bdf3-4b5b-a163-6cf02551e3c4",
+      "name": "When chat message received",
+      "webhookId": "11973fd7-8551-46da-a186-89e46290579c"
+    },
+    {
+      "parameters": {
+        "message": "=Generated image for: {{$json.chatInput}}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1.3,
+      "position": [
+        416,
+        0
+      ],
+      "id": "798e754b-fc99-4112-96fd-11bb899895fc",
+      "name": "Chat",
+      "webhookId": "fd648552-2867-4e4d-9d41-9022b4ac378c"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Generate Image": {
+      "main": [
+        [
+          {
+            "node": "Chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Generate Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "6c68dc6c-1fd9-472f-a308-85299be25963",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5387d2a75d8c883718234cdd60176366d2f86c5f7c232342382889c9ae01165e"
+  },
+  "nodeGroups": [],
+  "id": "FpIDOg2xZS6IHFWl",
+  "tags": []
+}
